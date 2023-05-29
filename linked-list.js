@@ -180,13 +180,39 @@ class LinkedList {
   /** removeAt(idx): return & remove item at idx, */
 
   removeAt(idx) {
+    if (idx < 0 || idx > this.length) {
+      throw Error("Index out of bounds");
+    }
+
+    if(idx == 0) {
+      return this.shift()
+    }
+    else if (idx == this.length) {
+      return this.pop()
+    }
+    else {
+      let currNode = this.head;
+      for (let i = 0; i < idx - 1; i++) {
+        currNode = currNode.next;
+      }
+      const removedVal = currNode.next.val
+      currNode.next = currNode.next.next
+      this.length -= 1;
+      return removedVal;
+    }
 
   }
 
   /** average(): return an average of all values in the list */
 
   average() {
-
+    let currNode = this.head;
+    let sum = 0;
+    for (let i = 0; i < this.length; i++) {
+      sum += currNode.val;
+      currNode = currNode.next;
+    }
+    return sum;
   }
 }
 
