@@ -33,18 +33,50 @@ class LinkedList {
       this.tail.next = newNode;
       this.tail = newNode;
     }
-    this.length += 1
+    this.length += 1;
   }
 
   /** unshift(val): add new value to start of list. */
 
   unshift(val) {
+    const newNode = new Node(val)
 
+    if(!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    }
+    else {
+      newNode.next = this.head;
+      this.head =newNode;
+    }
+    this.length += 1;
   }
 
   /** pop(): return & remove last item. */
 
   pop() {
+    //handle empty list
+    if (!this.head) {
+      throw Error("List is empty")
+    }
+
+    const val = this.tail.val;
+    let currNode = this.head
+
+    if (!currNode.next) { //handle 1 element list
+      this.head = null;
+      this.tail = null;
+    }
+    else { // handle list with more than 1 element
+      while (currNode.next != this.tail) {
+        currNode = currNode.next;
+      }
+      currNode.next = null;
+      this.tail = currNode;
+    }
+
+    this.length -= 1;
+    return val;
 
   }
 
@@ -52,23 +84,96 @@ class LinkedList {
 
   shift() {
 
+    //handle empty list
+    if (!this.head) {
+      throw Error("List is empty")
+    }
+
+    const val = this.head.val;
+
+    let currNode = this.head;
+
+    if (!currNode.next) { //handle 1 element list
+      this.head = null;
+      this.tail = null;
+    }
+    else {
+      this.head = currNode.next;
+    }
+
+    this.length -= 1;
+    return val;
+
   }
 
   /** getAt(idx): get val at idx. */
 
   getAt(idx) {
 
+    if (!this.head) {
+      throw Error("List is empty")
+    }
+
+    if (idx < 0 || idx > this.length - 1) {
+      throw Error("Index out of bounds");
+    }
+
+    let currNode = this.head;
+
+    for(let i = 0; i < idx; i++) {
+      currNode = currNode.next;
+    }
+
+    return currNode.val;
   }
 
   /** setAt(idx, val): set val at idx to val */
 
   setAt(idx, val) {
 
+    if (!this.head) {
+      throw Error("List is empty")
+    }
+
+    if (idx < 0 || idx > this.length - 1) {
+      throw Error("Index out of bounds");
+    }
+
+    let currNode = this.head;
+
+    for(let i = 0; i < idx; i++) {
+      currNode = currNode.next;
+    }
+
+    currNode.val = val;
+
   }
 
   /** insertAt(idx, val): add node w/val before idx. */
 
   insertAt(idx, val) {
+
+    if (idx < 0 || idx > this.length) {
+      throw Error("Index out of bounds");
+    }
+
+    if(idx == 0) {
+      this.unshift(val)
+    }
+    else if (idx == this.length) {
+      this.push(val)
+    }
+    else {
+      const newNode = new Node(val);
+      const currNode = this.head
+      for(let i = 0; i < idx -1; i++) {
+        currNode = currNode.next;
+      }
+      newNode.next = currNode.next;
+      currNode.next = newNode;
+      this.length += 1;
+    }
+
 
   }
 
