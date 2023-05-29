@@ -23,7 +23,17 @@ class LinkedList {
   /** push(val): add new value to end of list. */
 
   push(val) {
+    const newNode = new Node(val)
 
+    if(!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    }
+    else {
+      this.tail.next = newNode;
+      this.tail = newNode;
+    }
+    this.length += 1
   }
 
   /** unshift(val): add new value to start of list. */
@@ -71,7 +81,7 @@ class LinkedList {
   /** average(): return an average of all values in the list */
 
   average() {
-    
+
   }
 }
 
